@@ -1,9 +1,10 @@
 import express from "express"
-import itemController from "../controllers/recipeController.js"
+import recipeController from "../controllers/recipeController.js"
 
 const router = express.Router()
 
-router.post('/recipes', itemController)
+router.post('/recipes', recipeController.CreateRecipe)
+router.get('/recipes', recipeController.getRecipes)
 
 
 export default router;
