@@ -72,4 +72,23 @@ const updateRecipe = async (req, res) => {
 };
 
 
-export default {CreateRecipe, getRecipes, getRecipe, updateRecipe};
+// Delete recipe
+const deleteRecipe = async (req, res, next) => {
+    try {
+        const recipe = await Recipe.findByIdAndDelete(req.params.id);
+        
+        if (!recipe) {
+            return res.status(404).json({success: false,  error: 'Recipe not found'});
+        }
+
+        res.status(200).json({
+        success: true,
+        data: {}
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+export default {CreateRecipe, getRecipes, getRecipe, updateRecipe, deleteRecipe};
