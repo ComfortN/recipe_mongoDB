@@ -26,7 +26,28 @@ const getRecipes = async (req, res) => {
         console.error(error)
         res.status(500).json({error: "An error occured while fetching recipes"})
     }
-}
+};
 
 
-export default {CreateRecipe, getRecipes};
+// Get a recipe by id
+const getRecipe = async (req, res) => {
+    try {
+        const recipe = await Recipe.findById(req.params.id);
+        if (!recipe) {
+            return res.status(404).json({
+                success: false,
+                error: 'Recipe not found'
+        });
+        }
+        res.status(200).json({
+        success: true,
+        data: recipe
+        });
+    } catch (error) {
+        res.status(500).json({error: "An error occurred while fetching recipes"})
+    }
+};
+
+
+
+export default {CreateRecipe, getRecipes, getRecipe};
