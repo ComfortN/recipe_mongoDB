@@ -49,5 +49,27 @@ const getRecipe = async (req, res) => {
 };
 
 
+// Update recipe
+const updateRecipe = async (req, res) => {
+    try {
+        const recipe = await Recipe.findByIdAndUpdate(req.params.id, req.body, {
+            new: true, runValidators: true});
 
-export default {CreateRecipe, getRecipes, getRecipe};
+        if (!recipe) {
+            return res.status(404).json({
+            success: false,
+            error: 'Recipe not found'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: recipe
+        });
+    } catch (error) {
+        res.status(500).json({error: "An error occurred while updating recipe"})
+    }
+};
+
+
+export default {CreateRecipe, getRecipes, getRecipe, updateRecipe};
